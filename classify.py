@@ -106,10 +106,11 @@ def train_test(X_train, y_train, X_test, y_test, filename_ls, C=1):
 	plt.figure()
 	plot_confusion_matrix(cnf_matrix, classes=classes,
 						  title='Confusion matrix, without normalization')
-	plt.savefig('cnf_matrix_normalize.png')
-	for i, e in enumerate(y_test):
-		if e == 'Hate_speech' and preds[i] != 'Hate_speech':
-			print preds[i], filename_ls[i]
+
+	plt.savefig('cnf_matrix.png')
+	# for i, e in enumerate(y_test):
+	# 	if e == 'Hate_speech' and preds[i] != 'Hate_speech':
+	# 		print preds[i], filename_ls[i]
 
 def main():
 	outputdir = sys.argv[1]
