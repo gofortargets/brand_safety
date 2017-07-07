@@ -97,12 +97,13 @@ def train_test(X_train, y_train, X_test, y_test, filename_ls, C=1):
 	print "F1: " + str(f1)
 	print "Precision" + str(precision)
 	print "Recall" + str(recall)
-
+	classes = ['Adult', 'Car_accident', 'Death_tragedy', 'Hate_speech', 'Religion', 'Safe']
 	print ''
 	print 'For each category'
+
 	print metrics.classification_report(y_test, preds)
 	cnf_matrix = confusion_matrix(y_test, preds)
-	classes = ['Adult', 'Car_accident', 'Death_tragedy', 'Hate_speech', 'Religion', 'Safe']
+
 	plt.figure()
 	plot_confusion_matrix(cnf_matrix, classes=classes,
 						  title='Confusion matrix, without normalization')
@@ -110,7 +111,7 @@ def train_test(X_train, y_train, X_test, y_test, filename_ls, C=1):
 	plt.savefig('cnf_matrix.png')
 	# for i, e in enumerate(y_test):
 	# 	if e == 'Hate_speech' and preds[i] != 'Hate_speech':
-	# 		print preds[i], filename_ls[i]
+	# 		print repr(preds[i]), filename_ls[i]
 
 def main():
 	outputdir = sys.argv[1]
