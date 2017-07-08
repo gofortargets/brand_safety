@@ -88,15 +88,16 @@ def train_test(X_train, y_train, X_test, y_test, filename_ls, C=1):
 		preds = clf.predict(X_test)
 		acc = accuracy_score(y_test, preds)
 		score_str = str(C) + ", %.4f, "%acc
-		f1 = f1_score(y_test, preds, pos_label=None, average='weighted')
-		precision = precision_score(y_test, preds, pos_label=None, average='weighted')
-		recall = recall_score(y_test, preds, pos_label=None, average='weighted')
+		f1 = f1_score(y_test, preds, pos_label=None, average='macro')
+		precision = precision_score(y_test, preds, pos_label=None, average='macro')
+		recall = recall_score(y_test, preds, pos_label=None, average='macro')
 		weighted_str = STR_FORMAT%(f1, precision, recall)
 
 	print "Accuracy: " + str(acc)
 	print "F1: " + str(f1)
 	print "Precision" + str(precision)
 	print "Recall" + str(recall)
+
 	classes = ['Adult', 'Car_accident', 'Death_tragedy', 'Hate_speech', 'Religion', 'Safe']
 	print ''
 	print 'For each category'
@@ -109,9 +110,12 @@ def train_test(X_train, y_train, X_test, y_test, filename_ls, C=1):
 						  title='Confusion matrix, without normalization')
 
 	plt.savefig('cnf_matrix.png')
-	# for i, e in enumerate(y_test):
-	# 	if e == 'Hate_speech' and preds[i] != 'Hate_speech':
-	# 		print repr(preds[i]), filename_ls[i]
+	output_file = sys.stdout
+	sys.stdout = open('error_Safe.txt', 'w')
+	for i, e in enumerate(y_test):
+		if e == 'Safe' and preds[i] != e:
+			print repr(preds[i]), filename_ls[i]
+	sys.stdout = output_file
 
 def main():
 	outputdir = sys.argv[1]
